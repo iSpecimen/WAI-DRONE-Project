@@ -1,1 +1,4 @@
-test
+*.pyc
+*.DS_Store
+*.dat
+*.caffemodel
