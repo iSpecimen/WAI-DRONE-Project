@@ -10,7 +10,6 @@ import socket
 import sys
 import time
 
-
 host = ''
 port = 9000
 locaddr = (host,port) 
@@ -48,7 +47,7 @@ recvThread.start()
 while True: 
 
     try:
-        msg = input("");
+        msg = input("-->:")
 
         if not msg:
             break  
@@ -61,6 +60,7 @@ while True:
         # Send data
         msg = msg.encode(encoding="utf-8") 
         sent = sock.sendto(msg, tello_address)
+
     except KeyboardInterrupt:
         print ('\n . . .\n')
         sock.close()  
