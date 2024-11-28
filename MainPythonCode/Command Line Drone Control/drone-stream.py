@@ -1,27 +1,26 @@
-#they won't give it to us, so it's our turn to figure out how to turn the cameras on, on the drone.
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-tello_address = ('192.168.10.1', 8889)  # Drone IP address
-sock.bind(('', 11111))
 
-#Get the user to type streamon to start stream connection
-while True:
-    try: 
-        msg = input("Enter command: ")
-        if 'streamon' in msg:
-            break
-    print("You need to type 'streamon' to start stream connection")
 
-# Continuously send commands typed in by the user
+import socket
+import cv2
+
+# #they won't give it to us, so it's our turn to figure out how to turn the cameras on, on the drone.
+# sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+# tello_address = ('192.168.10.1', 8889)  # Drone IP address
+# sock.bind(('', 11111))
+
+tello_video = cv2.VideoCapture('udp://@0.0.0.0:11111')
+
 while True:
     try:
-        msg = input("Enter command: ")
-        if 'end' in msg:
-            sock.close()
+        ret, frame = tello_video.read()
+        if ret:
+            cv2.imshow('Tello', frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-        elif 'streamon' in msg:
-            
-        sock.sendto(msg.encode(), tello_address)
-    except Exception as e:
-        print(f"Error: {e}")
-        sock.close()
-        break
+    except Exception as err:
+        print(err)  
+        
+tello_video.release()
+cv2.destroyAllWindows()
+       
+        
