@@ -5,3 +5,5 @@ Also the stuff is in functions because i lifted them off of my NEA, so can be re
 
 For the model training I used like ~700 images per class in total but this was a group of like >100 <200 images rotated different different directions
 so may end up needing quite a few images in different lighting and backgrounds (or could be the way i layered my model was bad lmao)
+
+use the updated one it should be a bit better than the other one
