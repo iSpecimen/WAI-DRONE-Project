@@ -1,4 +1,4 @@
-should be able to to use the frames that jess gets from opencv and run them in as images through the model, probably best to do this before the
+should be able to to use the frames from the tello stream in main/jess opencv one and run them in as images through the model, probably best to do this before the
 trasnformations on the frame (like the edge thing), then have a few decisions based on this output.
 
 Also the stuff is in functions because i lifted them off of my NEA, so can be removed completely and just executed in the order that the functions are in.
