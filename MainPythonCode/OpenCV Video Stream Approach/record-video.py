@@ -20,7 +20,14 @@ def videoRecorder():
     print("Started Recording.")
 
     while keepRecording:
-        frame = frame_read.frame
+        frame = frame_read.frame #
+        #If it can::
+        """
+        Can the frame above be used as an image??
+        If it can then using the compiled model and a function either in this file or saved as a separate file
+        call loadModel(frame), depending on how many classes we do the output should be an array with the probabilities
+        of each class, then use np argmax to get the highest then call some other functions depending on outcome
+        """
         if frame is not None:
             video.write(frame)
         else:
