@@ -1,0 +1,7 @@
+should be able to to use the frames that jess gets from opencv and run them in as images through the model, probably best to do this before the
+trasnformations on the frame (like the edge thing), then have a few decisions based on this output.
+
+Also the stuff is in functions because i lifted them off of my NEA, so can be removed completely and just executed in the order that the functions are in.
+
+For the model training I used like ~700 images per class in total but this was a group of like >100 <200 images rotated different different directions
+so may end up needing quite a few images in different lighting and backgrounds (or could be the way i layered my model was bad lmao)
