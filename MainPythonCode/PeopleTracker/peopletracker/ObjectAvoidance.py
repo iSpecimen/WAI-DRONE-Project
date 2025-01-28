@@ -68,19 +68,26 @@ def avoid(objectId):
         #tries to avoid an object by going up at 20
         myDrone.up_down_velocity = myDrone.direction * 20
 
-
+myDrone.takeoff()
 
 #MAIN CODE
 while True:
     #no idea if this works to get the video alas
-    img = telloGetFrame(myDrone)
+    img = telloGetFrame(myDrone, (360,24))
     #effectively just casting 
     blob = cv2.dnn.blobFromImage(img,1/255,(whT,whT),[0,0,0],1,crop=False)
     net.setInput(blob)
 
     #this sorts through the information from the network to get only the outputs
     layerNames = net.getLayerNames()
-    outputNames = [layerNames[i[0]-1] for i in net.getUnconnectedOutLayers()]
+    print("layer names ",layerNames)
+    print("Unconnected out layers",net.getUnconnectedOutLayers())
+    outputNames = []
+    for i in net.getUnconnectedOutLayers():
+        #ERROR - I think this should work.
+        print("i",i)
+        outputNames.append(layerNames[i-1])
+    #outputNames = [layerNames[i[0]-1] for i in net.getUnconnectedOutLayers()]
     outputs = net.forward(outputNames)
     #myfavfunction ;]]]]
     findObjects(outputs,img)
