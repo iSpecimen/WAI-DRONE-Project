@@ -14,12 +14,12 @@ while True:
         startCounter=1
 
     img = telloGetFrame(myDrone, (w,h))
-    img,info = findFace(img)
+    img,info, area= findFace(img)
     #GIVES INFORMATION ABOUT THE CENTRE POINT
     print(info[0][0])
 
     #Using PID controller
-    pError= trackFace(myDrone, info, w, pid, pError)
+    pError= trackFace(myDrone, info, w, pid, pError, area)
 
     cv2.imshow('Image', img)
     if cv2.waitKey(1) & 0xFF==ord('q'):

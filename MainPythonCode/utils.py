@@ -30,6 +30,7 @@ def findFace(img):
     #CODE TO PREVENT TRACKING MUTLIPLE FACES
     myFaceListC= []
     myFaceListArea = []
+    area = 5000 
 
     for (x,y,w,h) in faces:
         cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),2)
@@ -42,31 +43,38 @@ def findFace(img):
     if len(myFaceListArea)!= 0:
         #Find index of largest area, i.e. the closest face to the screen
         i = myFaceListArea.index(max(myFaceListArea))
-        return img, [myFaceListC[i], myFaceListArea[i]]
+        return img, [myFaceListC[i], myFaceListArea[i]], area
 
     else:
-        return img, [[0,0], 0]
+        return img, [[0,0], 0], area
     
-def trackFace(myDrone, info, w, pid, pError):
+def trackFace(myDrone, info, w, pid, pError, area):
     #PID Controllers
     error=info[0][0] - w//2
-    speed = pid[0]*error + pid[1]*(error-pError)
+    speed = pid[0]*error + pid[1]*(error-pError) 
     speed= int(np.clip(speed, -100, 100))#Make sure the speed stays in the boundaries
 
     if info[0][0]!=0:
+        print("FOUND FACE!")
         myDrone.yaw_velocity=speed
+        myDrone.up_down_velocity=0
+        if (area > 3600):
+            myDrone.for_back_velocity = -25
+        elif (area <2700):
+            myDrone.for_back_velocity = 25
+        else:
+            myDrone.for_back_velocity = 0
     else: #Keeps moving in a direction until a finds a face
         myDrone.for_back_velocity= 0
         myDrone.left_right_velocity= 0
-        myDrone.yaw_velocity= 30 #Continuously rotates
+        myDrone.yaw_velocity= 20 #Continuously rotates
 
-        if myDrone.get_height() >= 175:  # Max height to avoid over-lift
+        if myDrone.get_height() >= 170:  # Max height to avoid over-lift
             myDrone.direction = -1
         elif myDrone.get_height() <= 150:  # Min height to avoid crashing
             myDrone.direction = 1
         
         myDrone.up_down_velocity = myDrone.direction * 20  # Move up or down at a constant speed
-        
         error=0
     
     if myDrone.send_rc_control:
