@@ -58,7 +58,15 @@ def findObjects(outputs, img):
         #one corner, other corner, colour, thickness of line
         cv2.rectangle(img, (x,y),(x+w,y+h),(255,0,255),2)
         cv2.putTest(img,f'{classNames[classIds[i]]} {int(confVals[i]*100)}%', (x,y-10), cv2.FONT_HERSHEY_COMPLEX, 0.6, (255,0,255),2)
+        #should? go up until it cant see the chair or table anymore
+        avoid(classIds[i])
+    myDrone.up_down_velocity = 0
 
+#my very logical function
+def avoid(objectId):
+    if objectId=='chair' or objectId == 'diningtable':
+        #tries to avoid an object by going up at 20
+        myDrone.up_down_velocity = myDrone.direction * 20
 
 
 
