@@ -21,6 +21,7 @@ def telloGetFrame(myDrone, w=360, h=240):
     myFrame = myFrame.frame
     img = cv2.resize(myFrame, w,h)
     return img
+    
 
 def findFace(img):
     faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
@@ -106,19 +107,19 @@ def trackFB(myDrone, info, w, pid, pError, area):
     return error
 
     
-def detectThumbsUp(img):
-    mpHands = mp.solutions.hands
-    hands = mpHands.Hands()
-    mpDraw = mp.solutions.drawing_utils
-    imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    results = hands.process(imgRGB)
+# def detectThumbsUp(img):
+#     mpHands = mp.solutions.hands
+#     hands = mpHands.Hands()
+#     mpDraw = mp.solutions.drawing_utils
+#     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+#     results = hands.process(imgRGB)
     
-    if results.multi_hand_landmarks:
-        for handLms in results.multi_hand_landmarks:
-            thumb_tip = handLms.landmark[mpHands.HandLandmark.THUMB_TIP]
-            thumb_ip = handLms.landmark[mpHands.HandLandmark.THUMB_IP]
-            index_mcp = handLms.landmark[mpHands.HandLandmark.INDEX_FINGER_MCP]
+#     if results.multi_hand_landmarks:
+#         for handLms in results.multi_hand_landmarks:
+#             thumb_tip = handLms.landmark[mpHands.HandLandmark.THUMB_TIP]
+#             thumb_ip = handLms.landmark[mpHands.HandLandmark.THUMB_IP]
+#             index_mcp = handLms.landmark[mpHands.HandLandmark.INDEX_FINGER_MCP]
             
-            if thumb_tip.y < thumb_ip.y < index_mcp.y:
-                return True
-    return False
+#             if thumb_tip.y < thumb_ip.y < index_mcp.y:
+#                 return True
+#     return False
